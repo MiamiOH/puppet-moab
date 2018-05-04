@@ -1,0 +1,132 @@
+######### Managed by Puppet #########
+
+################################################################################
+#
+#  Moab Configuration File for moab-<%= scope['::moab::workloadmanager::version'] %>
+#
+#  Documentation can be found at
+#  http://docs.adaptivecomputing.com/mwm/help.htm
+#
+#  For a complete list of all parameters (including those below) please see
+#  the "Moab Parameters" Appendix at the documentation link above.
+#
+#  For more information on the initial configuration, please see
+#  "Initial Moab Configuration" at the documentation link above.
+#
+#  Use 'mdiag -C' to validate config file parameters
+#
+################################################################################
+
+SCHEDCFG[<%= scope['::moab::workloadmanager::server::instance_name'] %>]       SERVER=<%= scope['::moab::workloadmanager::server::server_hostname'] %>:<%= scope['::moab::workloadmanager::server::server_port'] %>
+<% if scope['::moab::workloadmanager::server::moab_fbserver_hostname'] -%>
+SCHEDCFG[<%= scope['::moab::workloadmanager::server::instance_name'] %>]       FBSERVER=<%= scope['::moab::workloadmanager::server::moab_fbserver_hostname'] %>
+<% end -%>
+SCHEDCFG[<%= scope['::moab::workloadmanager::server::instance_name'] %>]       MODE=<%= scope['::moab::workloadmanager::server::server_mode'] %>
+ADMINCFG[1]          USERS=<%= scope['::moab::workloadmanager::server::moab_adminusers'].join(',') %>
+
+TOOLSDIR             <%= scope['::moab::workloadmanager::server::toolsdir'] %>
+LOGLEVEL             <%= scope['::moab::workloadmanager::server::moab_loglevel'] %>
+<%- scope['::moab::workloadmanager::server::moab_hpc_cfg_extras'].each do |item| -%>
+<%= item %>
+<%- end -%>
+
+################################################################################
+#
+#  Resource Manager configuration
+#
+#  For more information on configuring a Resource Manager, see
+#  "Resource Manager Configuration" at the documentation link above.
+#
+################################################################################
+
+RMCFG[<%= scope['::moab::workloadmanager::server::resourcemanager_name'] %>]  TYPE=<%= scope['::moab::workloadmanager::server::resourcemanager_type'] %> <% if scope['::moab::workloadmanager::server::resourcemanager_submitcmd']-%>SUBMITCMD=<%=scope['::moab::workloadmanager::server::resourcemanager_submitcmd'] %><% end %>
+RMPOLLINTERVAL <%= scope['::moab::workloadmanager::server::resourcemanager_pollinterval'] %>
+<%- scope['::moab::workloadmanager::server::moab_hpc_cfg_resourcemanager_extras'].each do |item| -%>
+<%= item %>
+<%- end -%>
+
+################################################################################
+#
+#  Allocation Manager configuration
+#
+#  For more information on configuring an Allocation Manager, see:
+#  http://www.adaptivecomputing.com/resources/docs/mwm/6-0/6.4allocationmanagement.php
+#
+################################################################################
+
+<%- scope['::moab::workloadmanager::server::moab_hpc_cfg_allocationmanager_extras'].each do |item| -%>
+<%= item %>
+<%- end -%>
+
+################################################################################
+#
+#  Database configuration
+#
+#  For more information on Moab's integrated database see the USEDATABASE entry
+#  in the "Moab Parameters" Appendix at the documentation link above.
+#
+################################################################################
+
+<%- scope['::moab::workloadmanager::server::moab_hpc_cfg_databaseconfiguration_extras'].each do |item| -%>
+<%= item %>
+<%- end -%>
+
+################################################################################
+#
+# Statistical profiling
+#
+# Use the following parameters to enable statistical profiling, see the
+# "Credential Overview" section at the documentation link above.
+#
+################################################################################
+
+<%- scope['::moab::workloadmanager::server::moab_hpc_cfg_statisticalprofiling_extras'].each do |item| -%>
+<%= item %>
+<%- end -%>
+
+################################################################################
+#
+# Remote Viz application template
+#
+# The following parameter is required in order to use Remote Visualization support
+# in Viewpoint. Without it, Viewpoint will not be able to connect to remote
+# visualization jobs. You can safely comment it out if you do not use Viewpoint
+# with Remote Visualization support.
+#
+################################################################################
+
+<%- scope['::moab::workloadmanager::server::moab_hpc_cfg_remoteviz_extras'].each do |item| -%>
+<%= item %>
+<%- end -%>
+
+################################################################################
+#
+# Nitro application template
+#
+# The following parameter is required in order to manage Nitro applications in
+# Viewpoint. Without it, Viewpoint will not be able to gather Nitro statistics
+# for jobs. You can safely comment it out if you do not manage Nitro applications
+# using Viewpoint.
+#
+################################################################################
+
+<%- scope['::moab::workloadmanager::server::moab_hpc_cfg_nitroapplication_extras'].each do |item| -%>
+<%= item %>
+<%- end -%>
+
+################################################################################
+#
+# Default MAXJOB setting
+#
+# Total number of jobs (active, idle, blocked, etc) allowed by the scheduler
+#
+################################################################################
+
+MAXJOB <%= scope['::moab::workloadmanager::server::moab_maxjob'] %>
+<%- scope['::moab::workloadmanager::server::moab_hpc_cfg_maxjob_extras'].each do |item| -%>
+<%= item %>
+<%- end -%>
+
+<%- scope['::moab::workloadmanager::server::moab_hpc_cfg_includes'].each do |item| -%>
+include <%= item %>
+<%- end -%>
