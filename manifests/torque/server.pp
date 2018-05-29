@@ -15,17 +15,19 @@ class moab::torque::server (
   String $torque_home,
   String $service_ensure,
   String $service_enable,
+  String $base_package,
+  Array[String] $dependancy_packages,
   Array[String] $pbs_servers = [],
   Hash $compute_nodes = {},
   Hash $torque_hpc_cfg = {},
-) inherits ::moab::torque {
+) {
 
-  contain ::moab::torque::server::package
-  contain ::moab::torque::server::config
-  contain ::moab::torque::server::service
+  contain '::moab::torque::server::package'
+  contain '::moab::torque::server::config'
+  contain '::moab::torque::server::service'
 
-  Class[::moab::torque::server::package]
-  -> Class[::moab::torque::server::config]
-  -> Class[::moab::torque::server::service]
+  Class['::moab::torque::server::package']
+  -> Class['::moab::torque::server::config']
+  -> Class['::moab::torque::server::service']
 
 }

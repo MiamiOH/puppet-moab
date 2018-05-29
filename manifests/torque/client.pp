@@ -17,16 +17,17 @@ class moab::torque::client (
   String $service_enable,
   String $mom_host,
   String $mom_logevent,
+  Array[String] $packages,
   Array[String] $pbs_servers = [],
   Array[String] $mom_priv_config_extras = [],
-) inherits ::moab::torque {
+) {
 
-  contain ::moab::torque::client::package
-  contain ::moab::torque::client::config
-  contain ::moab::torque::client::service
+  contain '::moab::torque::client::package'
+  contain '::moab::torque::client::config'
+  contain '::moab::torque::client::service'
 
-  Class[::moab::torque::client::package]
-  -> Class[::moab::torque::client::config]
-  -> Class[::moab::torque::client::service]
+  Class['::moab::torque::client::package']
+  -> Class['::moab::torque::client::config']
+  -> Class['::moab::torque::client::service']
 
 }

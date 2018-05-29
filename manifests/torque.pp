@@ -8,5 +8,6 @@
 #   include moab::torque
 class moab::torque(
   String $version,
-) inherits ::moab {
+  Boolean $ha,
+) {
 }

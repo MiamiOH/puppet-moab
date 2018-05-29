@@ -1,2 +1,1 @@
-<%= %Q(#{scope['::moab::torque::client::pbs_servers'][0]}\n) unless scope['::moab::torque::client::ha'] -%>
-<%= %Q(#{scope['::moab::torque::client::pbs_servers'].join(',')}\n) if scope['::moab::torque::client::ha'] -%>
+<%= %Q(#{scope['::moab::torque::client::pbs_servers'].join(',')}\n) -%>

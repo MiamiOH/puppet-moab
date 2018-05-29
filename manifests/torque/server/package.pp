@@ -4,19 +4,12 @@
 #
 # @summary A short summary of the purpose of this class
 #
-# @example
-#   include moab::torque::server::package
-class moab::torque::server::package (
-  String $base_package,
-  Array[String] $dependancy_packages,
-  $version = $::moab::torque::server::version,
-) inherits ::moab::torque::server {
+class moab::torque::server::package {
 
-  $merged_packages = concat( [$base_package], $dependancy_packages )
+  $merged_packages = concat( [$moab::torque::server::base_package], $moab::torque::server::dependancy_packages )
 
   if $moab::torque::server::ensure == 'present' {
-    $package_ensure = $version
-    $package_provider = undef
+    $package_ensure = $moab::torque::server::version
   } else {
     if ($::osfamily == 'Suse') {
       $package_ensure = 'absent'

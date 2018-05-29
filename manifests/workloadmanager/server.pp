@@ -7,6 +7,7 @@
 # @example
 #   include moab::workloadmanager::server
 class moab::workloadmanager::server (
+  String $version,
   String $ensure,
   String $moab_user,
   String $moab_group,
@@ -27,9 +28,10 @@ class moab::workloadmanager::server (
   String $allocationmanager_type,
   String $allocationmanager_submitcmd,
   Array[String] $moab_adminusers,
+  String $base_package,
+  Array[String] $dependancy_packages,
   Optional[String] $moab_license_key = undef,
   Optional[String] $moab_fbserver_hostname = undef,
-
   Array $moab_hpc_cfg_extras = [],
   Array $moab_hpc_cfg_resourcemanager_extras = [],
   Array $moab_hpc_cfg_allocationmanager_extras = [],
@@ -39,14 +41,14 @@ class moab::workloadmanager::server (
   Array $moab_hpc_cfg_nitroapplication_extras = [],
   Array $moab_hpc_cfg_maxjob_extras = [],
   Array $moab_hpc_cfg_includes = [],
-) inherits ::moab::workloadmanager {
+) {
 
-  contain ::moab::workloadmanager::server::package
-  contain ::moab::workloadmanager::server::config
-  contain ::moab::workloadmanager::server::service
+  contain '::moab::workloadmanager::server::package'
+  contain '::moab::workloadmanager::server::config'
+  contain '::moab::workloadmanager::server::service'
 
-  Class[::moab::workloadmanager::server::package]
-  -> Class[::moab::workloadmanager::server::config]
-  -> Class[::moab::workloadmanager::server::service]
+  Class['::moab::workloadmanager::server::package']
+  -> Class['::moab::workloadmanager::server::config']
+  -> Class['::moab::workloadmanager::server::service']
 
 }

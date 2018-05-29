@@ -4,11 +4,7 @@
 #
 # @summary A short summary of the purpose of this class
 #
-# @example
-#   include moab::torque::client::service
-class moab::torque::client::service (
-
-) inherits ::moab::torque::client {
+class moab::torque::client::service {
 
   service { 'pbs_mom':
     ensure     => $moab::torque::client::service_ensure,

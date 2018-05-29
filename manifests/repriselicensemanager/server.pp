@@ -7,11 +7,11 @@
 # @example
 #   include moab::repriselicensemanager::server
 class moab::repriselicensemanager::server (
-  $version = $::moab::repriselicensemanager::version,
-  $ensure = $::moab::repriselicensemanager::ensure,
-  $packages = [],
-) inherits ::moab::repriselicensemanager {
+  String $version,
+  String $ensure,
+  Array[String] $packages,
+) {
 
-  contain ::moab::repriselicensemanager::server::package
+  contain '::moab::repriselicensemanager::server::package'
 
 }

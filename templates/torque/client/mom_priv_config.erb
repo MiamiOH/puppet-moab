@@ -1,5 +1,5 @@
 $mom_host <%= @mom_host %>
-$logevent <%= @mom_logevent %>
+$logevent <%= scope['::moab::torque::client::mom_logevent'] %>
 
 <%- scope['::moab::torque::client::mom_priv_config_extras'].each do |item| -%>
 <%= item %>

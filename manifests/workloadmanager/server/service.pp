@@ -4,9 +4,7 @@
 #
 # @summary A short summary of the purpose of this class
 #
-# @example
-#   include moab::workloadmanager::server::service
-class moab::workloadmanager::server::service () inherits ::moab::workloadmanager::server {
+class moab::workloadmanager::server::service {
 
   service { 'moab':
     ensure     => $moab::workloadmanager::server::service_ensure,

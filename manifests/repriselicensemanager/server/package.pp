@@ -1,15 +1,13 @@
 # moab::repriselicensemanager::server::package
 #
-# A description of what this class does
+# Package installer for Reprise License Manager
 #
-# @summary A short summary of the purpose of this class
+# @summary Package installer for Reprise License Manager
 #
-# @example
-#   include moab::repriselicensemanager::server::package
-class moab::repriselicensemanager::server::package () inherits ::moab::repriselicensemanager::server {
+class moab::repriselicensemanager::server::package {
 
-  if $::moab::repriselicensemanager::server::ensure == 'present' {
-    $package_ensure = $::moab::repriselicensemanager::server::version
+  if $moab::repriselicensemanager::server::ensure == 'present' {
+    $package_ensure = $moab::repriselicensemanager::server::version
     $package_provider = undef
   } else {
     if ($::osfamily == 'Suse') {
@@ -19,6 +17,6 @@ class moab::repriselicensemanager::server::package () inherits ::moab::repriseli
     }
   }
 
-  ensure_packages(  $::moab::repriselicensemanager::server::packages, { ensure => $package_ensure } )
+  ensure_packages( $moab::repriselicensemanager::server::packages, { ensure => $package_ensure } )
 
 }

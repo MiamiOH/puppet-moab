@@ -4,7 +4,5 @@
 #
 # @summary A short summary of the purpose of this class
 #
-# @example
-#   include moab::webservices
-class moab::webservices () inherits ::moab {
+class moab::webservices {
 }

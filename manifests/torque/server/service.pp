@@ -6,7 +6,7 @@
 #
 # @example
 #   include moab::torque::server::service
-class moab::torque::server::service () inherits ::moab::torque::server {
+class moab::torque::server::service {
 
   service { 'pbs_server':
     ensure     => $moab::torque::server::service_ensure,
@@ -20,6 +20,5 @@ class moab::torque::server::service () inherits ::moab::torque::server {
     hasstatus  => true,
     hasrestart => true,
   }
-
 
 }

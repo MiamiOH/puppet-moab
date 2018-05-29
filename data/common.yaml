@@ -1,6 +1,6 @@
 ---
 
-moab::workloadmanager::version: 9.1.2-1.el7
+moab::workloadmanager::server::version: 9.1.2-1.el7
 moab::workloadmanager::server::ensure: present
 moab::workloadmanager::server::moab_user: root
 moab::workloadmanager::server::moab_group: moab
@@ -22,9 +22,8 @@ moab::workloadmanager::server::allocationmanager_type: PBS
 moab::workloadmanager::server::allocationmanager_submitcmd: /usr/local/bin/qsub
 moab::workloadmanager::server::moab_adminusers:
 - root
-
-moab::workloadmanager::server::package::base_package: moab-workload-manager
-moab::workloadmanager::server::package::dependancy_packages:
+moab::workloadmanager::server::base_package: moab-workload-manager
+moab::workloadmanager::server::dependancy_packages:
 - moab-workload-manager-common
 - moab-workload-manager-hpc-configuration
 - moab-perl-RRDs
@@ -40,10 +39,10 @@ moab::torque::server::service_enable: 'true'
 moab::torque::server::torque_user: root
 moab::torque::server::torque_group: root
 moab::torque::server::torque_home: /var/spool/torque
-moab::torque::server::package::base_package: moab-torque-server
-moab::torque::server::package::dependancy_packages:
-- moab-torque-client
-- moab-torque-common
+moab::torque::server::base_package: torque-server
+moab::torque::server::dependancy_packages:
+- torque-devel
+- torque
 
 moab::torque::client::version: *torque_version
 moab::torque::client::ensure: present
@@ -55,12 +54,11 @@ moab::torque::client::torque_group: root
 moab::torque::client::torque_home: /var/spool/torque
 moab::torque::client::mom_host: "%{::fqdn}"
 moab::torque::client::mom_logevent: '1039'
-moab::torque::client::package::packages:
-- moab-torque-common
-- moab-torque-mom
-- moab-torque-client
+moab::torque::client::packages:
+- torque-client
+- torque
 
-moab::repriselicensemanager::version: 12.1.2-1
-moab::repriselicensemanager::ensure: present
+moab::repriselicensemanager::server::version: 12.1.2-1
+moab::repriselicensemanager::server::ensure: present
 moab::repriselicensemanager::server::packages:
 - ac-rlm

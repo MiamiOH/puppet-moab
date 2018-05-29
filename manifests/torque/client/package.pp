@@ -4,15 +4,10 @@
 #
 # @summary A short summary of the purpose of this class
 #
-# @example
-#   include moab::torque::client::package
-class moab::torque::client::package (
-  Array[String] $packages,
-  $version = $::moab::torque::client::version,
-) inherits ::moab::torque::client {
+class moab::torque::client::package {
 
   if $moab::torque::client::ensure == 'present' {
-    $package_ensure = $version
+    $package_ensure = $moab::torque::client::version
   } else {
     if ($::osfamily == 'Suse') {
       $package_ensure = 'absent'
@@ -21,6 +16,6 @@ class moab::torque::client::package (
     }
   }
 
-  ensure_packages( $packages, { ensure => $package_ensure } )
+  ensure_packages( $moab::torque::client::packages, { ensure => $package_ensure } )
 
 }

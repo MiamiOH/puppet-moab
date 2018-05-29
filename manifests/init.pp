@@ -6,7 +6,5 @@
 #
 # @example
 #   include moab
-class moab (
-){
-
+class moab {
 }

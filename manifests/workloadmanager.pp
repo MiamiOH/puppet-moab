@@ -4,9 +4,5 @@
 #
 # @summary A short summary of the purpose of this class
 #
-# @example
-#   include moab::workloadmanager
-class moab::workloadmanager (
-  String $version,
-) inherits ::moab {
+class moab::workloadmanager {
 }
