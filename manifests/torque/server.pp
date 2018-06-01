@@ -18,6 +18,7 @@ class moab::torque::server (
   String $base_package,
   Array[String] $dependancy_packages,
   Array[String] $pbs_servers = [],
+  Array[String] $pbs_args = [],
   Hash $compute_nodes = {},
   Hash $torque_hpc_cfg = {},
 ) {

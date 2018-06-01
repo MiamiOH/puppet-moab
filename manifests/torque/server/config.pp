@@ -36,19 +36,22 @@ class moab::torque::server::config {
     mode   => '0640',
   }
 
+  $_ha_arg = $moab::torque::server::ha ? { true => '--ha', default => undef }
+  $_pbs_args = concat($moab::torque::server::pbs_args, $_ha_arg)
+
   # lint:ignore:strict_indent
-  $ha_conf = @("END"/L)
+  $pbsargs_conf = @("END"/L)
     [Service]
-    Environment=PBS_ARGS=--ha
+    Environment="PBS_ARGS=${_pbs_args.join(' ')}"
     | END
   # lint:endignore
 
-  $ha_conf_ensure = $moab::torque::server::ha ? { true => 'present', default => 'absent' }
+  $pbsargs_conf_ensure = $_pbs_args.count ? { 0 => 'absent', default => 'present' }
 
-  systemd::dropin_file { 'ha.conf':
-    ensure  => $ha_conf_ensure,
+  systemd::dropin_file { 'pbsargs.conf':
+    ensure  => $pbsargs_conf_ensure,
     unit    => 'pbs_server.service',
-    content => $ha_conf,
+    content => $pbsargs_conf,
     notify  => Service['pbs_server'],
   }
 
