@@ -2,7 +2,7 @@
 
 ################################################################################
 #
-#  Moab Configuration File for moab-<%= scope['moab::workloadmanager::version'] %>
+#  Moab Configuration File for moab-<%= scope['moab::workloadmanager::server::version'] %>
 #
 #  Documentation can be found at
 #  http://docs.adaptivecomputing.com/mwm/help.htm
@@ -67,6 +67,9 @@ RMPOLLINTERVAL <%= scope['moab::workloadmanager::server::resourcemanager_pollint
 #
 ################################################################################
 
+<% if scope['moab::workloadmanager::server::internal_database'] -%>
+USEDATABASE INTERNAL
+<% end -%>
 <%- scope['moab::workloadmanager::server::moab_hpc_cfg_databaseconfiguration_extras'].each do |item| -%>
 <%= item %>
 <%- end -%>

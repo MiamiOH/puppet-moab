@@ -12,6 +12,7 @@ class moab::torque::server (
   Boolean $ha,
   String $torque_user,
   String $torque_group,
+  String $shared_path,
   String $torque_home,
   String $service_ensure,
   String $service_enable,

@@ -15,11 +15,19 @@ class moab::workloadmanager::server::config {
     default  => 'file',
   }
 
+  File {
+    owner  => $moab::workloadmanager::server::moab_user,
+    group  => $moab::workloadmanager::server::moab_group,
+  }
+
+  file { $moab::workloadmanager::server::shared_path:
+    ensure => 'directory',
+    mode   => '0770',
+  }
+
   file { "${_config_dir}/moab.hpc.cfg":
     ensure  => $_ensure,
     content => template("${module_name}/workloadmanager/moab.hpc.cfg.erb"),
-    owner   => $moab::workloadmanager::server::moab_user,
-    group   => $moab::workloadmanager::server::moab_group,
     mode    => '0644',
   }
 
@@ -31,8 +39,6 @@ class moab::workloadmanager::server::config {
   file { "${_config_dir}/moab.lic":
     ensure  => $moab_license_file_ensure,
     content => $moab::workloadmanager::server::moab_license_key,
-    owner   => $moab::workloadmanager::server::moab_user,
-    group   => $moab::workloadmanager::server::moab_group,
     mode    => '0640',
     notify  => Service['moab'],
   }

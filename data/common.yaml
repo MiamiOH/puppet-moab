@@ -4,6 +4,7 @@ moab::workloadmanager::server::version: 9.1.2-1.el7
 moab::workloadmanager::server::ensure: present
 moab::workloadmanager::server::moab_user: root
 moab::workloadmanager::server::moab_group: moab
+moab::workloadmanager::server::shared_path: /mnt/moab/shared/workloadmanager
 moab::workloadmanager::server::instance_name: Moab
 moab::workloadmanager::server::server_hostname: "%{facts.fqdn}"
 moab::workloadmanager::server::server_port: '42559'
@@ -13,6 +14,7 @@ moab::workloadmanager::server::moab_loglevel: '3'
 moab::workloadmanager::server::moab_maxjob: '51200'
 moab::workloadmanager::server::service_ensure: running
 moab::workloadmanager::server::service_enable: 'true'
+moab::workloadmanager::server::internal_database: true
 moab::workloadmanager::server::resourcemanager_name: pbs
 moab::workloadmanager::server::resourcemanager_type: PBS
 moab::workloadmanager::server::resourcemanager_submitcmd: /usr/local/bin/qsub
@@ -38,6 +40,7 @@ moab::torque::server::service_ensure: running
 moab::torque::server::service_enable: 'true'
 moab::torque::server::torque_user: root
 moab::torque::server::torque_group: root
+moab::torque::server::shared_path: /mnt/moab/shared/torque
 moab::torque::server::torque_home: /var/spool/torque
 moab::torque::server::base_package: torque-server
 moab::torque::server::dependancy_packages:
