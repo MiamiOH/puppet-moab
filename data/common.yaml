@@ -1,7 +1,10 @@
 ---
+moab::workloadmanager::version:  &workloadmanager_version    9.1.2-1.el7
+moab::workloadmanager::ha:       &workloadmanager_ha         false
 
-moab::workloadmanager::server::version: 9.1.2-1.el7
+moab::workloadmanager::server::version: *workloadmanager_version
 moab::workloadmanager::server::ensure: present
+moab::workloadmanager::server::ha: *workloadmanager_ha
 moab::workloadmanager::server::moab_user: root
 moab::workloadmanager::server::moab_group: moab
 moab::workloadmanager::server::shared_path: /mnt/moab/shared/workloadmanager
@@ -63,5 +66,10 @@ moab::torque::client::packages:
 
 moab::repriselicensemanager::server::version: 12.1.2-1
 moab::repriselicensemanager::server::ensure: present
+moab::repriselicensemanager::server::web_interface: true
+moab::repriselicensemanager::server::moab_user: rlm
+moab::repriselicensemanager::server::moab_group: rlm
+moab::repriselicensemanager::server::service_ensure: running
+moab::repriselicensemanager::server::service_enable: 'true'
 moab::repriselicensemanager::server::packages:
 - ac-rlm

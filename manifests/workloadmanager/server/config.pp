@@ -20,9 +20,11 @@ class moab::workloadmanager::server::config {
     group  => $moab::workloadmanager::server::moab_group,
   }
 
-  file { $moab::workloadmanager::server::shared_path:
-    ensure => 'directory',
-    mode   => '0770',
+  if $moab::workloadmanager::server::ha {
+    file { $moab::workloadmanager::server::shared_path:
+      ensure => 'directory',
+      mode   => '0770',
+    }
   }
 
   file { "${_config_dir}/moab.hpc.cfg":
@@ -32,7 +34,7 @@ class moab::workloadmanager::server::config {
   }
 
   if $moab::workloadmanager::server::moab_license_key {
-    $moab_license_file_ensure = 'present'
+    $moab_license_file_ensure = 'file'
   } else {
     $moab_license_file_ensure = 'absent'
   }

@@ -16,9 +16,11 @@ class moab::torque::server::config {
     group  => $moab::torque::server::torque_group,
   }
 
-  file { $moab::torque::server::shared_path:
-    ensure => 'directory',
-    mode   => '0770',
+  if $moab::torque::server::ha {
+    file { $moab::torque::server::shared_path:
+      ensure => 'directory',
+      mode   => '0770',
+    }
   }
 
   file { "${moab::torque::server::torque_home}/server_priv/nodes":

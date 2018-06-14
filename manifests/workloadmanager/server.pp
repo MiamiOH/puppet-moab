@@ -9,6 +9,7 @@
 class moab::workloadmanager::server (
   String $version,
   String $ensure,
+  Boolean $ha,
   String $moab_user,
   String $moab_group,
   String $shared_path,

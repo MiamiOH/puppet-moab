@@ -1,0 +1,14 @@
+[Unit]
+Description=Reprise License Manager
+
+[Service]
+Type=simple
+User=rlm
+WorkingDirectory=/opt/rlm
+Environment=RLM_ARGS=
+ExecStart=/opt/rlm/rlm -l -dlog /opt/rlm/rlm.dl $RLM_ARGS
+ExecStop=/opt/rlm/rlmdown RLM -q
+ExecReload=/opt/rlm/rlmreread -q
+
+[Install]
+WantedBy=multi-user.target
