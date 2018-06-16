@@ -1,1 +1,1 @@
-<%= %Q(#{scope['::moab::torque::server::pbs_servers'].join(',')}\n) -%>
+<%= %Q(#{scope['::moab::torque::server::pbs_servers'].sort.join(',')}\n) -%>
