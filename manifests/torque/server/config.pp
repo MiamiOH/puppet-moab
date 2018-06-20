@@ -37,6 +37,13 @@ class moab::torque::server::config {
     notify  => Service[['pbs_server', 'trqauthd']],
   }
 
+  file { "${moab::torque::server::torque_home}/torque.cfg":
+    ensure  => $moab::torque::server::ensure,
+    content => template("${module_name}/torque/server/torque.cfg.erb"),
+    mode    => '0644',
+    notify  => Service[['pbs_server', 'trqauthd']],
+  }
+
   $_ha_arg = $moab::torque::server::ha ? { true => '--ha', default => undef }
   $_pbs_args = concat($moab::torque::server::pbs_args, $_ha_arg)
 
