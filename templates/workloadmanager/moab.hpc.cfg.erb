@@ -67,9 +67,8 @@ RMPOLLINTERVAL <%= scope['moab::workloadmanager::server::resourcemanager_pollint
 #
 ################################################################################
 
-<% if scope['moab::workloadmanager::server::internal_database'] -%>
-USEDATABASE INTERNAL
-<% end -%>
+USEDATABASE <%= scope['moab::workloadmanager::server::usedatabase'] -%>
+
 <%- scope['moab::workloadmanager::server::moab_hpc_cfg_databaseconfiguration_extras'].each do |item| -%>
 <%= item %>
 <%- end -%>

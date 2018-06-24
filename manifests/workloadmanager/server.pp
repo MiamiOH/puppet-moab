@@ -19,7 +19,7 @@ class moab::workloadmanager::server (
   String $server_mode,
   String $service_ensure,
   String $service_enable,
-  Boolean $internal_database,
+  String $usedatabase,
   String $toolsdir,
   String $moab_loglevel,
   String $moab_maxjob,

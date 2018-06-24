@@ -17,7 +17,7 @@ moab::workloadmanager::server::moab_loglevel: '3'
 moab::workloadmanager::server::moab_maxjob: '51200'
 moab::workloadmanager::server::service_ensure: running
 moab::workloadmanager::server::service_enable: 'true'
-moab::workloadmanager::server::internal_database: true
+moab::workloadmanager::server::usedatabase: 'INTERNAL'
 moab::workloadmanager::server::resourcemanager_name: pbs
 moab::workloadmanager::server::resourcemanager_type: PBS
 moab::workloadmanager::server::resourcemanager_submitcmd: /usr/local/bin/qsub
