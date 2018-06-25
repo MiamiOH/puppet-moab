@@ -28,6 +28,7 @@ class moab::workloadmanager::server::config (
   Array $moab_hpc_cfg_resourcemanager_extras       = $moab::workloadmanager::server::moab_hpc_cfg_resourcemanager_extras,
   Array $moab_hpc_cfg_allocationmanager_extras     = $moab::workloadmanager::server::moab_hpc_cfg_allocationmanager_extras,
   String $usedatabase                              = $moab::workloadmanager::server::usedatabase,
+  Optional[Hash] $odbc_conf                        = $moab::workloadmanager::server::odbc_conf,
   Array $moab_hpc_cfg_databaseconfiguration_extras = $moab::workloadmanager::server::moab_hpc_cfg_databaseconfiguration_extras,
   Array $moab_hpc_cfg_statisticalprofiling_extras  = $moab::workloadmanager::server::moab_hpc_cfg_statisticalprofiling_extras,
   Array $moab_hpc_cfg_remoteviz_extras             = $moab::workloadmanager::server::moab_hpc_cfg_remoteviz_extras,
@@ -63,6 +64,20 @@ class moab::workloadmanager::server::config (
     content => template("${module_name}/workloadmanager/moab.hpc.cfg.erb"),
     mode    => '0644',
   }
+
+  if $usedatabase == 'ODBC' and $odbc_conf != undef {
+    $dsninfo_ensure = $ensure
+  } else {
+    $dsninfo_ensure = 'absent'
+  }
+
+  file { '/opt/moab/dsninfo.dsn':
+    mode  => '0640',
+    owner => 'root',
+    group => 'root',
+  }
+
+  create_ini_settings( $odbc_conf, { 'ensure' => $dsninfo_ensure, 'path' => '/opt/moab/dsninfo.dsn', 'notify' => Service['moab'] })
 
   if $moab::workloadmanager::server::moab_license_key {
     $moab_license_file_ensure = 'file'
