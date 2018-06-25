@@ -4,24 +4,31 @@
 #
 # @summary A short summary of the purpose of this class
 #
-class moab::torque::client::config {
+class moab::torque::client::config (
+  String $ensure                        = $moab::torque::client::ensure,
+  String $torque_home                   = $moab::torque::client::torque_home,
+  String $torque_user                   = $moab::torque::client::torque_user,
+  String $torque_group                  = $moab::torque::client::torque_group,
+  Array[String] $pbs_servers            = $moab::torque::client::pbs_servers,
+  String $mom_host                      = $moab::torque::client::mom_host,
+  String $mom_logevent                  = $moab::torque::client::mom_logevent,
+  Array[String] $mom_priv_config_extras = $moab::torque::client::mom_priv_config_extras,
+) {
 
-  $mom_host = $moab::torque::client::mom_host
-
-  file { "${moab::torque::client::torque_home}/mom_priv/config":
-    ensure  => $moab::torque::client::ensure,
+  file { "${torque_home}/mom_priv/config":
+    ensure  => $ensure,
     content => template("${module_name}/torque/client/mom_priv_config.erb"),
-    owner   => $moab::torque::client::torque_user,
-    group   => $moab::torque::client::torque_group,
+    owner   => $torque_user,
+    group   => $torque_group,
     mode    => '0644',
     notify  => Service['pbs_mom'],
   }
 
-  file { "${moab::torque::client::torque_home}/server_name":
-    ensure  => $moab::torque::client::ensure,
+  file { "${torque_home}/server_name":
+    ensure  => $ensure,
     content => template("${module_name}/torque/client/server_name.erb"),
-    owner   => $moab::torque::client::torque_user,
-    group   => $moab::torque::client::torque_group,
+    owner   => $torque_user,
+    group   => $torque_group,
     mode    => '0644',
     notify  => Service[['pbs_mom', 'trqauthd']],
   }

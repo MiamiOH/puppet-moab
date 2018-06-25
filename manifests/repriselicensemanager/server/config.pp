@@ -4,21 +4,26 @@
 #
 # @summary A short summary of the purpose of this class
 #
-class moab::repriselicensemanager::server::config {
+class moab::repriselicensemanager::server::config (
+  String $ensure                                = $moab::repriselicensemanager::server::ensure,
+  String $version                               = $moab::repriselicensemanager::server::version,
+  Boolean $web_interface                        = $moab::repriselicensemanager::server::web_interface,
+  Optional[String] $workloadmanager_license_key = $moab::repriselicensemanager::server::workloadmanager_license_key,
+){
 
-  $_rlm_ensure = $moab::repriselicensemanager::server::ensure ? {
-    'absent' => $moab::repriselicensemanager::server::ensure,
+  $_rlm_ensure = $ensure ? {
+    'absent' => $ensure,
     default  => 'file',
   }
 
   $_mwm_config_dir = '/opt/moab/etc'
-  if versioncmp($moab::repriselicensemanager::server::version, '9.1.0') < 0 {
+  if versioncmp($version, '9.1.0') < 0 {
     $_mwm_license_file = 'moab.lic'
   } else {
     $_mwm_license_file = 'moab-rlm.lic'
   }
 
-  if $moab::repriselicensemanager::server::workloadmanager_license_key {
+  if $workloadmanager_license_key {
     $_workloadmanager_license_file_ensure = $_rlm_ensure
   } else {
     $_workloadmanager_license_file_ensure = 'absent'
@@ -26,7 +31,7 @@ class moab::repriselicensemanager::server::config {
 
   file { "${_mwm_config_dir}/${_mwm_license_file}":
     ensure  => $_workloadmanager_license_file_ensure,
-    content => $moab::repriselicensemanager::server::workloadmanager_license_key,
+    content => $workloadmanager_license_key,
     mode    => '0640',
   }
 
@@ -43,7 +48,7 @@ class moab::repriselicensemanager::server::config {
     ensure => 'running',
   }
 
-  $rlm_arg = $moab::repriselicensemanager::server::web_interface ? { false => '-nows', default => undef }
+  $rlm_arg = $web_interface ? { false => '-nows', default => undef }
 
   # lint:ignore:strict_indent
   $rlm_args_conf = @("END"/L)
@@ -52,7 +57,7 @@ class moab::repriselicensemanager::server::config {
     | END
   # lint:endignore
 
-  $rlm_args_conf_ensure = $moab::repriselicensemanager::server::web_interface ? { true => 'absent', default => $_rlm_ensure }
+  $rlm_args_conf_ensure = $web_interface ? { true => 'absent', default => $_rlm_ensure }
 
   systemd::dropin_file { 'rlmargs.conf':
     ensure  => $rlm_args_conf_ensure,

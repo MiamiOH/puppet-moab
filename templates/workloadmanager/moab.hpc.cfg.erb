@@ -2,7 +2,7 @@
 
 ################################################################################
 #
-#  Moab Configuration File for moab-<%= scope['moab::workloadmanager::server::version'] %>
+#  Moab Configuration File for moab-<%= @version %>
 #
 #  Documentation can be found at
 #  http://docs.adaptivecomputing.com/mwm/help.htm
@@ -17,16 +17,16 @@
 #
 ################################################################################
 
-SCHEDCFG[<%= scope['moab::workloadmanager::server::instance_name'] %>]       SERVER=<%= scope['moab::workloadmanager::server::server_hostname'] %>:<%= scope['::moab::workloadmanager::server::server_port'] %>
-<% if scope['moab::workloadmanager::server::moab_fbserver_hostname'] -%>
-SCHEDCFG[<%= scope['moab::workloadmanager::server::instance_name'] %>]       FBSERVER=<%= scope['moab::workloadmanager::server::moab_fbserver_hostname'] %>
+SCHEDCFG[<%= @instance_name %>]       SERVER=<%= @server_hostname %>:<%= @server_port %>
+<% if @fbserver_hostname -%>
+SCHEDCFG[<%= @instance_name %>]       FBSERVER=<%= @fbserver_hostname %>
 <% end -%>
-SCHEDCFG[<%= scope['moab::workloadmanager::server::instance_name'] %>]       MODE=<%= scope['moab::workloadmanager::server::server_mode'] %>
-ADMINCFG[1]          USERS=<%= scope['moab::workloadmanager::server::moab_adminusers'].join(',') %>
+SCHEDCFG[<%= @instance_name %>]       MODE=<%= @server_mode %>
+ADMINCFG[1]          USERS=<%= @moab_adminusers.join(',') %>
 
-TOOLSDIR             <%= scope['moab::workloadmanager::server::toolsdir'] %>
-LOGLEVEL             <%= scope['moab::workloadmanager::server::moab_loglevel'] %>
-<%- scope['moab::workloadmanager::server::moab_hpc_cfg_extras'].each do |item| -%>
+TOOLSDIR             <%= @moab_toolsdir %>
+LOGLEVEL             <%= @moab_loglevel %>
+<%- @moab_hpc_cfg_extras.each do |item| -%>
 <%= item %>
 <%- end -%>
 
@@ -39,9 +39,9 @@ LOGLEVEL             <%= scope['moab::workloadmanager::server::moab_loglevel'] %
 #
 ################################################################################
 
-RMCFG[<%= scope['moab::workloadmanager::server::resourcemanager_name'] %>]  TYPE=<%= scope['moab::workloadmanager::server::resourcemanager_type'] %> <% if scope['::moab::workloadmanager::server::resourcemanager_submitcmd']-%>SUBMITCMD=<%=scope['::moab::workloadmanager::server::resourcemanager_submitcmd'] %><% end %>
-RMPOLLINTERVAL <%= scope['moab::workloadmanager::server::resourcemanager_pollinterval'] %>
-<%- scope['moab::workloadmanager::server::moab_hpc_cfg_resourcemanager_extras'].each do |item| -%>
+RMCFG[<%= @resourcemanager_name %>]  TYPE=<%= @resourcemanager_type %> <% if @resourcemanager_submitcmd -%>SUBMITCMD=<%= @resourcemanager_submitcmd %><% end %>
+RMPOLLINTERVAL <%= @resourcemanager_pollinterval %>
+<%- @moab_hpc_cfg_resourcemanager_extras.each do |item| -%>
 <%= item %>
 <%- end -%>
 
@@ -54,7 +54,7 @@ RMPOLLINTERVAL <%= scope['moab::workloadmanager::server::resourcemanager_pollint
 #
 ################################################################################
 
-<%- scope['moab::workloadmanager::server::moab_hpc_cfg_allocationmanager_extras'].each do |item| -%>
+<%- @moab_hpc_cfg_allocationmanager_extras.each do |item| -%>
 <%= item %>
 <%- end -%>
 
@@ -67,9 +67,9 @@ RMPOLLINTERVAL <%= scope['moab::workloadmanager::server::resourcemanager_pollint
 #
 ################################################################################
 
-USEDATABASE <%= scope['moab::workloadmanager::server::usedatabase'] -%>
+USEDATABASE <%= @usedatabase -%>
 
-<%- scope['moab::workloadmanager::server::moab_hpc_cfg_databaseconfiguration_extras'].each do |item| -%>
+<%- @moab_hpc_cfg_databaseconfiguration_extras.each do |item| -%>
 <%= item %>
 <%- end -%>
 
@@ -82,7 +82,7 @@ USEDATABASE <%= scope['moab::workloadmanager::server::usedatabase'] -%>
 #
 ################################################################################
 
-<%- scope['moab::workloadmanager::server::moab_hpc_cfg_statisticalprofiling_extras'].each do |item| -%>
+<%- @moab_hpc_cfg_statisticalprofiling_extras.each do |item| -%>
 <%= item %>
 <%- end -%>
 
@@ -97,7 +97,7 @@ USEDATABASE <%= scope['moab::workloadmanager::server::usedatabase'] -%>
 #
 ################################################################################
 
-<%- scope['moab::workloadmanager::server::moab_hpc_cfg_remoteviz_extras'].each do |item| -%>
+<%- @moab_hpc_cfg_remoteviz_extras.each do |item| -%>
 <%= item %>
 <%- end -%>
 
@@ -112,7 +112,7 @@ USEDATABASE <%= scope['moab::workloadmanager::server::usedatabase'] -%>
 #
 ################################################################################
 
-<%- scope['moab::workloadmanager::server::moab_hpc_cfg_nitroapplication_extras'].each do |item| -%>
+<%- @moab_hpc_cfg_nitroapplication_extras.each do |item| -%>
 <%= item %>
 <%- end -%>
 
@@ -124,11 +124,11 @@ USEDATABASE <%= scope['moab::workloadmanager::server::usedatabase'] -%>
 #
 ################################################################################
 
-MAXJOB <%= scope['moab::workloadmanager::server::moab_maxjob'] %>
-<%- scope['moab::workloadmanager::server::moab_hpc_cfg_maxjob_extras'].each do |item| -%>
+MAXJOB <%= @moab_maxjob %>
+<%- @moab_hpc_cfg_maxjob_extras.each do |item| -%>
 <%= item %>
 <%- end -%>
 
-<%- scope['moab::workloadmanager::server::moab_hpc_cfg_includes'].each do |item| -%>
+<%- @moab_hpc_cfg_includes.each do |item| -%>
 include <%= item %>
 <%- end -%>

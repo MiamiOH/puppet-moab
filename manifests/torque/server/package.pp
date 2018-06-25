@@ -4,12 +4,17 @@
 #
 # @summary A short summary of the purpose of this class
 #
-class moab::torque::server::package {
+class moab::torque::server::package (
+  String $ensure                     = $moab::torque::server::ensure,
+  String $version                    = $moab::torque::server::version,
+  String $base_package               = $moab::torque::server::base_package,
+  Array[String] $dependancy_packages = $moab::torque::server::dependancy_packages,
+) {
 
-  $merged_packages = concat( [$moab::torque::server::base_package], $moab::torque::server::dependancy_packages )
+  $merged_packages = concat( [$base_package], $dependancy_packages )
 
-  if $moab::torque::server::ensure == 'present' {
-    $package_ensure = $moab::torque::server::version
+  if $ensure == 'present' {
+    $package_ensure = $version
   } else {
     if ($::osfamily == 'Suse') {
       $package_ensure = 'absent'

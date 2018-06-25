@@ -5,47 +5,56 @@
 # @summary A short summary of the purpose of this class
 #
 
-class moab::torque::server::config {
+class moab::torque::server::config (
+  String $ensure                   = $moab::torque::server::ensure,
+  Hash $compute_nodes              = $moab::torque::server::compute_nodes,
+  String $torque_user              = $moab::torque::server::torque_user,
+  String $torque_group             = $moab::torque::server::torque_group,
+  Array[String] $torque_cfg_extras = $moab::torque::server::torque_cfg_extras,
+  String $shared_path              = $moab::torque::server::shared_path,
+  String $torque_home              = $moab::torque::server::torque_home,
+  Boolean $ha                      = $moab::torque::server::ha,
+  Array[String] $pbs_servers       = $moab::torque::server::pbs_servers,
+  Array[String] $pbs_args          = $moab::torque::server::pbs_args,
+) {
 
   include ::systemd::systemctl::daemon_reload
 
-  $compute_nodes = $moab::torque::server::compute_nodes
-
   File{
-    owner  => $moab::torque::server::torque_user,
-    group  => $moab::torque::server::torque_group,
+    owner  => $torque_user,
+    group  => $torque_group,
   }
 
-  if $moab::torque::server::ha {
-    file { $moab::torque::server::shared_path:
+  if $ha {
+    file { $shared_path:
       ensure => 'directory',
       mode   => '0770',
     }
   }
 
-  file { "${moab::torque::server::torque_home}/server_priv/nodes":
-    ensure  => $moab::torque::server::ensure,
+  file { "${torque_home}/server_priv/nodes":
+    ensure  => $ensure,
     content => template("${module_name}/torque/server/nodes.erb"),
     mode    => '0644',
     notify  => Service['pbs_server'],
   }
 
-  file { "${moab::torque::server::torque_home}/server_name":
-    ensure  => $moab::torque::server::ensure,
+  file { "${torque_home}/server_name":
+    ensure  => $ensure,
     content => template("${module_name}/torque/server/server_name.erb"),
     mode    => '0644',
     notify  => Service[['pbs_server', 'trqauthd']],
   }
 
-  file { "${moab::torque::server::torque_home}/torque.cfg":
-    ensure  => $moab::torque::server::ensure,
+  file { "${torque_home}/torque.cfg":
+    ensure  => $ensure,
     content => template("${module_name}/torque/server/torque.cfg.erb"),
     mode    => '0644',
     notify  => Service[['pbs_server', 'trqauthd']],
   }
 
-  $_ha_arg = $moab::torque::server::ha ? { true => '--ha', default => undef }
-  $_pbs_args = concat($moab::torque::server::pbs_args, $_ha_arg)
+  $_ha_arg = $ha ? { true => '--ha', default => undef }
+  $_pbs_args = concat($pbs_args, $_ha_arg)
 
   # lint:ignore:strict_indent
   $pbsargs_conf = @("END"/L)

@@ -12,7 +12,7 @@ moab::workloadmanager::server::instance_name: Moab
 moab::workloadmanager::server::server_hostname: "%{facts.fqdn}"
 moab::workloadmanager::server::server_port: '42559'
 moab::workloadmanager::server::server_mode: NORMAL
-moab::workloadmanager::server::toolsdir: /opt/moab/tools
+moab::workloadmanager::server::moab_toolsdir: /opt/moab/tools
 moab::workloadmanager::server::moab_loglevel: '3'
 moab::workloadmanager::server::moab_maxjob: '51200'
 moab::workloadmanager::server::service_ensure: running

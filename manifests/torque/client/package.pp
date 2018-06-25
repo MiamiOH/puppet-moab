@@ -4,10 +4,14 @@
 #
 # @summary A short summary of the purpose of this class
 #
-class moab::torque::client::package {
+class moab::torque::client::package (
+  String $ensure          = $moab::torque::client::ensure,
+  String $version         = $moab::torque::client::version,
+  Array[String] $packages = $moab::torque::client::packages,
+){
 
-  if $moab::torque::client::ensure == 'present' {
-    $package_ensure = $moab::torque::client::version
+  if $ensure == 'present' {
+    $package_ensure = $version
   } else {
     if ($::osfamily == 'Suse') {
       $package_ensure = 'absent'
@@ -16,6 +20,6 @@ class moab::torque::client::package {
     }
   }
 
-  ensure_packages( $moab::torque::client::packages, { ensure => $package_ensure } )
+  ensure_packages( $packages, { ensure => $package_ensure } )
 
 }

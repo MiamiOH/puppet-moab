@@ -4,12 +4,17 @@
 #
 # @summary A short summary of the purpose of this class
 #
-class moab::workloadmanager::server::package {
+class moab::workloadmanager::server::package (
+  String $ensure                     = $moab::workloadmanager::server::ensure,
+  String $version                    = $moab::workloadmanager::server::version,
+  String $base_package               = $moab::workloadmanager::server::base_package,
+  Array[String] $dependancy_packages = $moab::workloadmanager::server::dependancy_packages,
+) {
 
-  $merged_packages = concat( [$moab::workloadmanager::server::base_package], $moab::workloadmanager::server::dependancy_packages )
+  $merged_packages = concat( [$base_package], $dependancy_packages )
 
-  if $moab::workloadmanager::server::ensure == 'present' {
-    $package_ensure = $moab::workloadmanager::server::version
+  if $ensure == 'present' {
+    $package_ensure = $version
     $package_provider = undef
   } else {
     if ($::osfamily == 'Suse') {

@@ -4,24 +4,55 @@
 #
 # @summary A short summary of the purpose of this class
 #
-class moab::workloadmanager::server::config {
+class moab::workloadmanager::server::config (
+  String $version                                  = $moab::workloadmanager::server::version,
+  String $ensure                                   = $moab::workloadmanager::server::ensure,
+  String $moab_user                                = $moab::workloadmanager::server::moab_user,
+  String $moab_group                               = $moab::workloadmanager::server::moab_group,
+  String $shared_path                              = $moab::workloadmanager::server::shared_path,
+  Optional[String] $moab_license_key               = $moab::workloadmanager::server::moab_license_key,
+  Boolean $ha                                      = $moab::workloadmanager::server::ha,
+  String $server_hostname                          = $moab::workloadmanager::server::server_hostname,
+  String $server_port                              = $moab::workloadmanager::server::server_port,
+  String $server_mode                              = $moab::workloadmanager::server::server_mode,
+  Optional[String] $fbserver_hostname              = $moab::workloadmanager::server::fbserver_hostname,
+  String $instance_name                            = $moab::workloadmanager::server::instance_name,
+  Array[String] $moab_adminusers                   = $moab::workloadmanager::server::moab_adminusers,
+  String $moab_loglevel                            = $moab::workloadmanager::server::moab_loglevel,
+  Array $moab_hpc_cfg_extras                       = $moab::workloadmanager::server::moab_hpc_cfg_extras,
+  String $moab_toolsdir                            = $moab::workloadmanager::server::moab_toolsdir,
+  String $resourcemanager_name                     = $moab::workloadmanager::server::resourcemanager_name,
+  String $resourcemanager_type                     = $moab::workloadmanager::server::resourcemanager_type,
+  String $resourcemanager_submitcmd                = $moab::workloadmanager::server::resourcemanager_submitcmd,
+  String $resourcemanager_pollinterval             = $moab::workloadmanager::server::resourcemanager_pollinterval,
+  Array $moab_hpc_cfg_resourcemanager_extras       = $moab::workloadmanager::server::moab_hpc_cfg_resourcemanager_extras,
+  Array $moab_hpc_cfg_allocationmanager_extras     = $moab::workloadmanager::server::moab_hpc_cfg_allocationmanager_extras,
+  String $usedatabase                              = $moab::workloadmanager::server::usedatabase,
+  Array $moab_hpc_cfg_databaseconfiguration_extras = $moab::workloadmanager::server::moab_hpc_cfg_databaseconfiguration_extras,
+  Array $moab_hpc_cfg_statisticalprofiling_extras  = $moab::workloadmanager::server::moab_hpc_cfg_statisticalprofiling_extras,
+  Array $moab_hpc_cfg_remoteviz_extras             = $moab::workloadmanager::server::moab_hpc_cfg_remoteviz_extras,
+  Array $moab_hpc_cfg_nitroapplication_extras      = $moab::workloadmanager::server::moab_hpc_cfg_nitroapplication_extras,
+  String $moab_maxjob                              = $moab::workloadmanager::server::moab_maxjob,
+  Array $moab_hpc_cfg_maxjob_extras                = $moab::workloadmanager::server::moab_hpc_cfg_maxjob_extras,
+  Array $moab_hpc_cfg_includes                     = $moab::workloadmanager::server::moab_hpc_cfg_includes,
+) {
 
-  $_config_dir = $moab::workloadmanager::server::version ? {
+  $_config_dir = $version ? {
     /^9[.]/ => '/opt/moab/etc',
     default => '/etc/moab'
   }
-  $_ensure = $moab::workloadmanager::server::ensure ? {
-    'absent' => $moab::workloadmanager::server::ensure,
+  $_ensure = $ensure ? {
+    'absent' => $ensure,
     default  => 'file',
   }
 
   File {
-    owner  => $moab::workloadmanager::server::moab_user,
-    group  => $moab::workloadmanager::server::moab_group,
+    owner  => $moab_user,
+    group  => $moab_group,
   }
 
-  if $moab::workloadmanager::server::ha {
-    file { $moab::workloadmanager::server::shared_path:
+  if $ha {
+    file { $shared_path:
       ensure => 'directory',
       mode   => '0770',
     }
@@ -40,7 +71,7 @@ class moab::workloadmanager::server::config {
   }
   file { "${_config_dir}/moab.lic":
     ensure  => $moab_license_file_ensure,
-    content => $moab::workloadmanager::server::moab_license_key,
+    content => $moab_license_key,
     mode    => '0640',
     notify  => Service['moab'],
   }

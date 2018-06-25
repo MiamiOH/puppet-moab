@@ -4,10 +4,14 @@
 #
 # @summary Package installer for Reprise License Manager
 #
-class moab::repriselicensemanager::server::package {
+class moab::repriselicensemanager::server::package (
+  String $ensure          = $moab::repriselicensemanager::server::ensure,
+  String $version         = $moab::repriselicensemanager::server::version,
+  Array[String] $packages = $moab::repriselicensemanager::server::packages,
+){
 
-  if $moab::repriselicensemanager::server::ensure == 'present' {
-    $package_ensure = $moab::repriselicensemanager::server::version
+  if $ensure == 'present' {
+    $package_ensure = $version
     $package_provider = undef
   } else {
     if ($::osfamily == 'Suse') {
@@ -17,6 +21,6 @@ class moab::repriselicensemanager::server::package {
     }
   }
 
-  ensure_packages( $moab::repriselicensemanager::server::packages, { ensure => $package_ensure } )
+  ensure_packages( $packages, { ensure => $package_ensure } )
 
 }
