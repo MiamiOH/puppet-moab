@@ -66,9 +66,9 @@ class moab::workloadmanager::server::config (
   }
 
   if $usedatabase == 'ODBC' and $odbc_conf != undef {
-    $dsninfo_ensure = $ensure
+    $dsninfo_ensure = 'set'
   } else {
-    $dsninfo_ensure = 'absent'
+    $dsninfo_ensure = 'rm'
   }
 
   file { '/opt/moab/dsninfo.dsn':
@@ -77,7 +77,12 @@ class moab::workloadmanager::server::config (
     group => 'root',
   }
 
-  create_ini_settings( $odbc_conf, { 'ensure' => $dsninfo_ensure, 'path' => '/opt/moab/dsninfo.dsn', 'notify' => Service['moab'] })
+  augeas { 'dsninfo.dsn':
+    lens    => 'Odbc.ns',
+    incl    => '/opt/moab/dsninfo.dsn',
+    changes => $odbc_conf.join_keys_to_values(" '").suffix("'").prefix("${dsninfo_ensure} ODBC/"),
+    notify  => Service['moab'],
+  }
 
   if $moab::workloadmanager::server::moab_license_key {
     $moab_license_file_ensure = 'file'
