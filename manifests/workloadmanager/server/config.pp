@@ -65,23 +65,24 @@ class moab::workloadmanager::server::config (
     mode    => '0644',
   }
 
-  if $usedatabase == 'ODBC' and $odbc_conf != undef {
-    $dsninfo_ensure = 'set'
-  } else {
-    $dsninfo_ensure = 'rm'
+  $dsninfo_ensure = $usedatabase ? {
+    'odbc'  => 'set',
+    default => 'rm',
   }
 
   file { '/opt/moab/dsninfo.dsn':
-    mode  => '0640',
-    owner => 'root',
-    group => 'root',
+    ensure => file,
+    mode   => '0640',
+    owner  => 'root',
+    group  => 'root',
   }
 
   augeas { 'dsninfo.dsn':
-    lens    => 'Odbc.ns',
+    lens    => 'Odbc.lns',
     incl    => '/opt/moab/dsninfo.dsn',
     changes => $odbc_conf.join_keys_to_values(" '").suffix("'").prefix("${dsninfo_ensure} ODBC/"),
     notify  => Service['moab'],
+    require => File['/opt/moab/dsninfo.dsn']
   }
 
   if $moab::workloadmanager::server::moab_license_key {
