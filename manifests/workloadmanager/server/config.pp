@@ -82,7 +82,7 @@ class moab::workloadmanager::server::config (
     incl    => '/opt/moab/dsninfo.dsn',
     changes => $odbc_conf.join_keys_to_values(" '").suffix("'").prefix("${dsninfo_ensure} ODBC/"),
     notify  => Service['moab'],
-    require => File['/opt/moab/dsninfo.dsn']
+    require => File['/opt/moab/dsninfo.dsn'],
   }
 
   if $moab::workloadmanager::server::moab_license_key {
