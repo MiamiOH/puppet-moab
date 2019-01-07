@@ -33,7 +33,7 @@ class moab::workloadmanager::server (
   Array[String] $moab_adminusers,
   String $base_package,
   Array[String] $dependancy_packages,
-  Optional[Hash] $odbc_conf = undef,
+  Optional[Hash] $odbc_conf = {},
   Optional[String] $moab_license_key = undef,
   Optional[String] $fbserver_hostname = undef,
   Array $moab_hpc_cfg_extras = [],
