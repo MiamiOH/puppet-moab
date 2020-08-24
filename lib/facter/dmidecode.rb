@@ -12,8 +12,8 @@
 #   none
 
 Facter.add(:physical_memory) do
-  confine osfamily: 'RedHat'
-  confine virtual: 'physical'
+  confine :kernel => 'Linux'
+  confine :virtual => 'physical'
   setcode do
     physical_memory = {}
     if Facter::Util::Resolution.which('/opt/puppetlabs/puppet/bin/dmidecode')
@@ -23,14 +23,15 @@ Facter.add(:physical_memory) do
   end
 end
 
-Facter.add(:processors) do
-  confine osfamily: 'RedHat'
-  confine virtual: 'physical'
+Facter.add(:torque) do
+  confine :kernel => 'Linux'
+  confine :virtual => 'physical'
+  confine { Facter::Core::Execution.which('pbsnodes') }
   setcode do
-    processors = {}
+    result = {}
     if Facter::Util::Resolution.which('/opt/puppetlabs/puppet/bin/dmidecode')
-      processors[:cores] = Facter::Util::Resolution.exec('echo $(( $(/opt/puppetlabs/puppet/bin/dmidecode -t 4| grep -Po \'(?<=Core Count: )[[:digit:]]+\' | paste -s -d+ -) ))')
+      result[:cpucores] = Facter::Util::Resolution.exec('echo $(( $(/opt/puppetlabs/puppet/bin/dmidecode -t 4| grep -Po \'(?<=Core Count: )[[:digit:]]+\' | paste -s -d+ -) ))')
     end
-    processors unless processors.empty?
+    result
   end
 end
