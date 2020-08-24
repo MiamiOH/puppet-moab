@@ -24,12 +24,12 @@ class moab::torque::server (
   Array[String] $torque_cfg_extras = [],
 ) {
 
-  contain '::moab::torque::server::package'
-  contain '::moab::torque::server::config'
-  contain '::moab::torque::server::service'
+  contain 'moab::torque::server::package'
+  contain 'moab::torque::server::config'
+  contain 'moab::torque::server::service'
 
-  Class['::moab::torque::server::package']
-  -> Class['::moab::torque::server::config']
-  -> Class['::moab::torque::server::service']
+  Class['moab::torque::server::package']
+  -> Class['moab::torque::server::config']
+  -> Class['moab::torque::server::service']
 
 }

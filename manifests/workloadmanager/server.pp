@@ -47,12 +47,12 @@ class moab::workloadmanager::server (
   Array $moab_hpc_cfg_includes = [],
 ) {
 
-  contain '::moab::workloadmanager::server::package'
-  contain '::moab::workloadmanager::server::config'
-  contain '::moab::workloadmanager::server::service'
+  contain 'moab::workloadmanager::server::package'
+  contain 'moab::workloadmanager::server::config'
+  contain 'moab::workloadmanager::server::service'
 
-  Class['::moab::workloadmanager::server::package']
-  -> Class['::moab::workloadmanager::server::config']
-  -> Class['::moab::workloadmanager::server::service']
+  Class['moab::workloadmanager::server::package']
+  -> Class['moab::workloadmanager::server::config']
+  -> Class['moab::workloadmanager::server::service']
 
 }

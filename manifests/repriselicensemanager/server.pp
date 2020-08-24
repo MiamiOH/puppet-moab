@@ -19,12 +19,12 @@ class moab::repriselicensemanager::server (
   Optional[String] $nitro_license_key = undef,
 ) {
 
-  contain '::moab::repriselicensemanager::server::package'
-  contain '::moab::repriselicensemanager::server::config'
-  contain '::moab::repriselicensemanager::server::service'
+  contain 'moab::repriselicensemanager::server::package'
+  contain 'moab::repriselicensemanager::server::config'
+  contain 'moab::repriselicensemanager::server::service'
 
-  Class['::moab::repriselicensemanager::server::package']
-  -> Class['::moab::repriselicensemanager::server::config']
-  -> Class['::moab::repriselicensemanager::server::service']
+  Class['moab::repriselicensemanager::server::package']
+  -> Class['moab::repriselicensemanager::server::config']
+  -> Class['moab::repriselicensemanager::server::service']
 
 }

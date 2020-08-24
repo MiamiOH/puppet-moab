@@ -22,12 +22,12 @@ class moab::torque::client (
   Array[String] $mom_priv_config_extras = [],
 ) {
 
-  contain '::moab::torque::client::package'
-  contain '::moab::torque::client::config'
-  contain '::moab::torque::client::service'
+  contain 'moab::torque::client::package'
+  contain 'moab::torque::client::config'
+  contain 'moab::torque::client::service'
 
-  Class['::moab::torque::client::package']
-  -> Class['::moab::torque::client::config']
-  -> Class['::moab::torque::client::service']
+  Class['moab::torque::client::package']
+  -> Class['moab::torque::client::config']
+  -> Class['moab::torque::client::service']
 
 }
