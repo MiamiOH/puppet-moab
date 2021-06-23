@@ -12,8 +12,8 @@
 #   none
 
 Facter.add(:physical_memory) do
-  confine :kernel => 'Linux'
-  confine :virtual => 'physical'
+  confine kernel: 'Linux'
+  confine virtual: 'physical'
   setcode do
     physical_memory = {}
     if Facter::Util::Resolution.which('/opt/puppetlabs/puppet/bin/dmidecode')
@@ -24,8 +24,8 @@ Facter.add(:physical_memory) do
 end
 
 Facter.add(:torque) do
-  confine :kernel => 'Linux'
-  confine :virtual => 'physical'
+  confine kernel: 'Linux'
+  confine virtual: 'physical'
   confine { Facter::Core::Execution.which('pbsnodes') }
   setcode do
     result = {}
