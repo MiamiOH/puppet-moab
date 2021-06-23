@@ -18,8 +18,6 @@ class moab::torque::server::config (
   Array[String] $pbs_args          = $moab::torque::server::pbs_args,
 ) {
 
-  include ::systemd::systemctl::daemon_reload
-
   File{
     owner  => $torque_user,
     group  => $torque_group,
