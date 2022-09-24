@@ -1,6 +1,6 @@
 {
   "name": "MiamiOH-moab",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": "Brad Koby",
   "summary": "Manage Adaptive Computing MOAB",
   "license": "GPL-3.0+",
@@ -13,7 +13,7 @@
       "version_requirement": ">= 4.13.0 < 8.0.0"
     },
     {
-      "name": "camptocamp/systemd",
+      "name": "puppet/systemd",
       "version_requirement": ">= 1.1.1 < 4.0.0"
     },
     {
