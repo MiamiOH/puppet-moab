@@ -8,6 +8,11 @@ describe 'moab::workloadmanager::server::package' do
       let(:facts) { os_facts }
 
       it { is_expected.to compile }
+
+      it { is_expected.to contain_package('moab-workload-manager') }
+      it { is_expected.to contain_package('moab-workload-manager-common') }
+      it { is_expected.to contain_package('moab-workload-manager-hpc-configuration') }
+      it { is_expected.to contain_package('moab-perl-RRDs') }
     end
   end
 end

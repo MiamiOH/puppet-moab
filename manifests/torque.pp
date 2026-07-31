@@ -6,7 +6,13 @@
 #
 # @example
 #   include moab::torque
-class moab::torque(
+# @param version
+#   Version of Torque to install.
+#
+# @param ha
+#   Enable high availability mode.
+#
+class moab::torque (
   String $version,
   Boolean $ha,
 ) {

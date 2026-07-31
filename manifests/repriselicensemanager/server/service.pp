@@ -4,14 +4,19 @@
 #
 # @summary A short summary of the purpose of this class
 #
+#
+# @param service_ensure
+#   Desired state of the Reprise License Manager service.
+#
+# @param service_enable
+#   Whether the Reprise License Manager service starts at boot.
+#
 class moab::repriselicensemanager::server::service (
-  String $service_ensure = $moab::repriselicensemanager::server::service_ensure,
-  String $service_enable = $moab::repriselicensemanager::server::service_enable,
-){
-
+  Enum['running','stopped'] $service_ensure = $moab::repriselicensemanager::server::service_ensure,
+  Boolean $service_enable = $moab::repriselicensemanager::server::service_enable,
+) {
   service { 'rlm':
     ensure => $service_ensure,
     enable => $service_enable,
   }
-
 }

@@ -8,6 +8,24 @@ describe 'moab::torque::client::config' do
       let(:facts) { os_facts }
 
       it { is_expected.to compile }
+
+      it do
+        is_expected.to contain_file('/var/spool/torque/mom_priv/config')
+          .with(
+            owner: 'root',
+            group: 'root',
+            mode: '0644',
+          )
+      end
+
+      it do
+        is_expected.to contain_file('/var/spool/torque/server_name')
+          .with(
+            owner: 'root',
+            group: 'root',
+            mode: '0644',
+          )
+      end
     end
   end
 end

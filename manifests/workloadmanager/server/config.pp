@@ -4,9 +4,103 @@
 #
 # @summary A short summary of the purpose of this class
 #
+#
+# @param version
+#   Version of Moab being configured.
+#
+# @param ensure
+#   Whether Moab configuration files should exist.
+#
+# @param moab_user
+#   User account that owns Moab configuration files.
+#
+# @param moab_group
+#   Group that owns Moab configuration files.
+#
+# @param shared_path
+#   Shared filesystem location used for high availability configurations.
+#
+# @param moab_license_key
+#   Moab license contents.
+#
+# @param ha
+#   Enable high availability configuration mode.
+#
+# @param server_hostname
+#   Hostname of the Moab server.
+#
+# @param server_port
+#   Port used by the Moab server.
+#
+# @param server_mode
+#   Moab server operating mode.
+#
+# @param fbserver_hostname
+#   Fairshare database server hostname.
+#
+# @param instance_name
+#   Name of the Moab instance.
+#
+# @param moab_adminusers
+#   List of Moab administrator users.
+#
+# @param moab_loglevel
+#   Moab logging level.
+#
+# @param moab_hpc_cfg_extras
+#   Additional moab.hpc.cfg entries.
+#
+# @param moab_toolsdir
+#   Directory containing Moab tools.
+#
+# @param resourcemanager_name
+#   Resource manager name.
+#
+# @param resourcemanager_type
+#   Resource manager type.
+#
+# @param resourcemanager_submitcmd
+#   Command used to submit jobs through the resource manager.
+#
+# @param resourcemanager_pollinterval
+#   Resource manager polling interval.
+#
+# @param moab_hpc_cfg_resourcemanager_extras
+#   Additional resource manager configuration entries.
+#
+# @param moab_hpc_cfg_allocationmanager_extras
+#   Additional allocation manager configuration entries.
+#
+# @param usedatabase
+#   Database backend type used by Moab.
+#
+# @param odbc_conf
+#   ODBC configuration settings.
+#
+# @param moab_hpc_cfg_databaseconfiguration_extras
+#   Additional database configuration entries.
+#
+# @param moab_hpc_cfg_statisticalprofiling_extras
+#   Additional statistical profiling configuration entries.
+#
+# @param moab_hpc_cfg_remoteviz_extras
+#   Additional remote visualization configuration entries.
+#
+# @param moab_hpc_cfg_nitroapplication_extras
+#   Additional Nitro application configuration entries.
+#
+# @param moab_maxjob
+#   Maximum number of jobs supported by Moab.
+#
+# @param moab_hpc_cfg_maxjob_extras
+#   Additional max job configuration entries.
+#
+# @param moab_hpc_cfg_includes
+#   Additional configuration include statements.
+#
 class moab::workloadmanager::server::config (
   String $version                                  = $moab::workloadmanager::server::version,
-  String $ensure                                   = $moab::workloadmanager::server::ensure,
+  Enum['present','absent'] $ensure                                   = $moab::workloadmanager::server::ensure,
   String $moab_user                                = $moab::workloadmanager::server::moab_user,
   String $moab_group                               = $moab::workloadmanager::server::moab_group,
   String $shared_path                              = $moab::workloadmanager::server::shared_path,
@@ -28,7 +122,7 @@ class moab::workloadmanager::server::config (
   Array $moab_hpc_cfg_resourcemanager_extras       = $moab::workloadmanager::server::moab_hpc_cfg_resourcemanager_extras,
   Array $moab_hpc_cfg_allocationmanager_extras     = $moab::workloadmanager::server::moab_hpc_cfg_allocationmanager_extras,
   String $usedatabase                              = $moab::workloadmanager::server::usedatabase,
-  Optional[Hash] $odbc_conf                        = $moab::workloadmanager::server::odbc_conf,
+  Hash $odbc_conf                                  = $moab::workloadmanager::server::odbc_conf,
   Array $moab_hpc_cfg_databaseconfiguration_extras = $moab::workloadmanager::server::moab_hpc_cfg_databaseconfiguration_extras,
   Array $moab_hpc_cfg_statisticalprofiling_extras  = $moab::workloadmanager::server::moab_hpc_cfg_statisticalprofiling_extras,
   Array $moab_hpc_cfg_remoteviz_extras             = $moab::workloadmanager::server::moab_hpc_cfg_remoteviz_extras,
@@ -37,7 +131,6 @@ class moab::workloadmanager::server::config (
   Array $moab_hpc_cfg_maxjob_extras                = $moab::workloadmanager::server::moab_hpc_cfg_maxjob_extras,
   Array $moab_hpc_cfg_includes                     = $moab::workloadmanager::server::moab_hpc_cfg_includes,
 ) {
-
   $_config_dir = $version ? {
     /^9[.]/ => '/opt/moab/etc',
     default => '/etc/moab'
@@ -61,7 +154,7 @@ class moab::workloadmanager::server::config (
 
   file { "${_config_dir}/moab.hpc.cfg":
     ensure  => $_ensure,
-    content => template("${module_name}/workloadmanager/moab.hpc.cfg.erb"),
+    content => template('moab/workloadmanager/moab.hpc.cfg.erb'),
     mode    => '0644',
   }
 
@@ -96,5 +189,4 @@ class moab::workloadmanager::server::config (
     mode    => '0640',
     notify  => Service['moab'],
   }
-
 }

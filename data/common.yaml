@@ -16,7 +16,7 @@ moab::workloadmanager::server::moab_toolsdir: /opt/moab/tools
 moab::workloadmanager::server::moab_loglevel: '3'
 moab::workloadmanager::server::moab_maxjob: '51200'
 moab::workloadmanager::server::service_ensure: running
-moab::workloadmanager::server::service_enable: 'true'
+moab::workloadmanager::server::service_enable: true
 moab::workloadmanager::server::usedatabase: 'INTERNAL'
 moab::workloadmanager::server::resourcemanager_name: pbs
 moab::workloadmanager::server::resourcemanager_type: PBS
@@ -28,7 +28,7 @@ moab::workloadmanager::server::allocationmanager_submitcmd: /usr/local/bin/qsub
 moab::workloadmanager::server::moab_adminusers:
 - root
 moab::workloadmanager::server::base_package: moab-workload-manager
-moab::workloadmanager::server::dependancy_packages:
+moab::workloadmanager::server::dependency_packages:
 - moab-workload-manager-common
 - moab-workload-manager-hpc-configuration
 - moab-perl-RRDs
@@ -40,13 +40,13 @@ moab::torque::server::version: *torque_version
 moab::torque::server::ensure: present
 moab::torque::server::ha: *torque_ha
 moab::torque::server::service_ensure: running
-moab::torque::server::service_enable: 'true'
+moab::torque::server::service_enable: true
 moab::torque::server::torque_user: root
 moab::torque::server::torque_group: root
 moab::torque::server::shared_path: /mnt/moab/shared/torque
 moab::torque::server::torque_home: /var/spool/torque
 moab::torque::server::base_package: torque-server
-moab::torque::server::dependancy_packages:
+moab::torque::server::dependency_packages:
 - torque-devel
 - torque
 
@@ -54,7 +54,7 @@ moab::torque::client::version: *torque_version
 moab::torque::client::ensure: present
 moab::torque::client::ha: *torque_ha
 moab::torque::client::service_ensure: running
-moab::torque::client::service_enable: 'true'
+moab::torque::client::service_enable: true
 moab::torque::client::torque_user: root
 moab::torque::client::torque_group: root
 moab::torque::client::torque_home: /var/spool/torque
@@ -70,6 +70,6 @@ moab::repriselicensemanager::server::web_interface: true
 moab::repriselicensemanager::server::moab_user: rlm
 moab::repriselicensemanager::server::moab_group: rlm
 moab::repriselicensemanager::server::service_ensure: running
-moab::repriselicensemanager::server::service_enable: 'true'
+moab::repriselicensemanager::server::service_enable: true
 moab::repriselicensemanager::server::packages:
 - ac-rlm

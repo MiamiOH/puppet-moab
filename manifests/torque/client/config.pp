@@ -4,8 +4,32 @@
 #
 # @summary A short summary of the purpose of this class
 #
+# @param ensure
+#   Whether Torque client configuration files should exist.
+#
+# @param torque_home
+#   Torque installation directory.
+#
+# @param torque_user
+#   User account that owns Torque client configuration files.
+#
+# @param torque_group
+#   Group that owns Torque client configuration files.
+#
+# @param pbs_servers
+#   PBS server hostnames.
+#
+# @param mom_host
+#   Hostname of the Torque MOM service.
+#
+# @param mom_logevent
+#   MOM logging event configuration.
+#
+# @param mom_priv_config_extras
+#   Additional MOM private configuration entries.
+#
 class moab::torque::client::config (
-  String $ensure                        = $moab::torque::client::ensure,
+  Enum['present','absent'] $ensure                        = $moab::torque::client::ensure,
   String $torque_home                   = $moab::torque::client::torque_home,
   String $torque_user                   = $moab::torque::client::torque_user,
   String $torque_group                  = $moab::torque::client::torque_group,
@@ -14,10 +38,9 @@ class moab::torque::client::config (
   String $mom_logevent                  = $moab::torque::client::mom_logevent,
   Array[String] $mom_priv_config_extras = $moab::torque::client::mom_priv_config_extras,
 ) {
-
   file { "${torque_home}/mom_priv/config":
     ensure  => $ensure,
-    content => template("${module_name}/torque/client/mom_priv_config.erb"),
+    content => template('moab/torque/client/mom_priv_config.erb'),
     owner   => $torque_user,
     group   => $torque_group,
     mode    => '0644',
@@ -26,7 +49,7 @@ class moab::torque::client::config (
 
   file { "${torque_home}/server_name":
     ensure  => $ensure,
-    content => template("${module_name}/torque/client/server_name.erb"),
+    content => template('moab/torque/client/server_name.erb'),
     owner   => $torque_user,
     group   => $torque_group,
     mode    => '0644',

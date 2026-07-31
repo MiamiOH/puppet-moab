@@ -8,6 +8,40 @@ describe 'moab::torque::server::config' do
       let(:facts) { os_facts }
 
       it { is_expected.to compile }
+
+      it do
+        is_expected.to contain_file('/var/spool/torque/server_priv/nodes')
+          .with(
+            owner: 'root',
+            group: 'root',
+            mode: '0644',
+          )
+      end
+
+      it do
+        is_expected.to contain_file('/var/spool/torque/server_name')
+          .with(
+            owner: 'root',
+            group: 'root',
+            mode: '0644',
+          )
+      end
+
+      it do
+        is_expected.to contain_file('/var/spool/torque/torque.cfg')
+          .with(
+            owner: 'root',
+            group: 'root',
+            mode: '0644',
+          )
+      end
+
+      it do
+        is_expected.to contain_systemd__dropin_file('pbsargs.conf')
+          .with(
+            unit: 'pbs_server.service',
+          )
+      end
     end
   end
 end

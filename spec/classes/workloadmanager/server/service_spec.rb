@@ -8,6 +8,14 @@ describe 'moab::workloadmanager::server::service' do
       let(:facts) { os_facts }
 
       it { is_expected.to compile }
+
+      it do
+        is_expected.to contain_service('moab')
+          .with(
+            hasstatus: true,
+            hasrestart: true,
+          )
+      end
     end
   end
 end
